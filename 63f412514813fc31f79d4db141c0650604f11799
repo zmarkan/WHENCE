@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T152800Z_19de
+ACP-Trace-Hash: sha256:a2d7c86aaadde6b0d9cd64544b3c8244ff1770ae7f481550f3d9fac9b1e2c817
+ACP-Event-Count: 1
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T152800Z_19de","created_at":"2026-03-01T15:28:00.000Z","target":{"type":"git-commit","id":"63f412514813fc31f79d4db141c0650604f11799"},"redaction_mode":"hash-response","event_count":1,"events":[{"spec_version":"0.1.0","event_id":"evt_6b6cdc58","timestamp":"2026-03-01T15:27:48.190Z","prompt":"Fix CI: fetch full history with --unshallow, use dynamic commit range for PRs vs direct pushes to main","prompt_hash":"sha256:4993dbc9289c9572e7f527dc33dbb2a417928da616be93c233bb9050f3842dc5","tool":"claude-code","branch":"main","files":[".circleci/config.yml"],"model":"claude-opus-4-6","response_captured":false,"context":{"git_base_sha":"22b9aac615c0caebb26bc9c6be551fdcf1c714ab","workspace_state":"dirty"},"cwd":"/Users/zmarkan/code/acp"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:a2d7c86aaadde6b0d9cd64544b3c8244ff1770ae7f481550f3d9fac9b1e2c817"},"branch":"main","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
