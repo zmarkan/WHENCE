@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T154704Z_48ae
+ACP-Trace-Hash: sha256:bae93684f3ee52db74c4505bb4a254d00167445d9d05f2f444286b5e56139fd0
+ACP-Event-Count: 1
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T154704Z_48ae","created_at":"2026-03-01T15:47:04.000Z","target":{"type":"git-commit","id":"fbfecbeab55e1bdde003e5321f022bd5754d9bc4"},"redaction_mode":"hash-response","event_count":1,"events":[{"spec_version":"0.1.0","event_id":"evt_10ec19d6","timestamp":"2026-03-01T15:47:00.584Z","prompt":"I want you to create an agents.md file with instructions for how to use git-whence in this repository. This is a self-referential guide where my spec and its reference implementation are recorded using the same tool that we are describing in the same process.","prompt_hash":"sha256:e4ddcdd5f90ebd1fbba0d4fccb095814a62998321caafea49ab6ff870445ff25","tool":"claude-code","branch":"feat/gha","cwd":"/Users/zmarkan/code/acp"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:bae93684f3ee52db74c4505bb4a254d00167445d9d05f2f444286b5e56139fd0"},"branch":"feat/gha","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
