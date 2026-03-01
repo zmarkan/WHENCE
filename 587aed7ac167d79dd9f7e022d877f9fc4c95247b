@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T154243Z_8335
+ACP-Trace-Hash: sha256:86ba16f7511a50c37d9ebfb4a38d8e08078c864ba369c6b5222d6484dcf63309
+ACP-Event-Count: 1
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T154243Z_8335","created_at":"2026-03-01T15:42:43.000Z","target":{"type":"git-commit","id":"587aed7ac167d79dd9f7e022d877f9fc4c95247b"},"redaction_mode":"hash-response","event_count":1,"events":[{"spec_version":"0.1.0","event_id":"evt_3a2bddb2","timestamp":"2026-03-01T15:42:40.519Z","prompt":"I have created a CircleCI pipeline that verifies my GitWhence tool and checks the commit for AI tool provenance. Now I want to do the same for GitHub Actions. Implement GitHub Actions workflows for AI code provenance with git-whence.","prompt_hash":"sha256:709269c1d97bb5de24162956fce70f262daa79eaa5ebaccf98517f445af12195","tool":"claude-code","branch":"feat/gha","response_captured":false,"cwd":"/Users/zmarkan/code/acp"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:86ba16f7511a50c37d9ebfb4a38d8e08078c864ba369c6b5222d6484dcf63309"},"branch":"feat/gha","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
