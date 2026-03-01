@@ -1,0 +1,68 @@
+name: ACP Provenance
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  acp-provenance:
+    name: Verify AI Code Provenance
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch ACP notes
+        run: git fetch origin refs/notes/acp:refs/notes/acp 2>/dev/null || true
+
+      - name: Install git-whence
+        run: pip install -e .
+        working-directory: cli
+
+      - name: Initialize ACP
+        run: git whence init
+
+      - name: Determine commit range
+        id: range
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "ACP_RANGE=origin/${{ github.event.pull_request.base.ref }}..HEAD" >> "$GITHUB_ENV"
+          else
+            echo "ACP_RANGE=HEAD~1..HEAD" >> "$GITHUB_ENV"
+          fi
+
+      - name: Verify trace integrity
+        run: git whence verify $ACP_RANGE --policy integrity
+
+      - name: Check co-author compliance
+        run: git whence verify $ACP_RANGE --policy co-author || true
+
+      - name: Generate provenance report
+        run: |
+          git whence report $ACP_RANGE --format markdown > acp-summary.md
+          git whence report $ACP_RANGE --format json > acp-report.json
+
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file acp-summary.md
+
+      - name: Upload provenance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acp-provenance
+          path: |
+            acp-report.json
+            acp-summary.md
