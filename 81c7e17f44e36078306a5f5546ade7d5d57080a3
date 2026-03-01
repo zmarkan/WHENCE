@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T154743Z_3e88
+ACP-Trace-Hash: sha256:65ca37d8651f790597a868a8449613ef58fad217f5afeaefa890678fede49c43
+ACP-Event-Count: 1
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T154743Z_3e88","created_at":"2026-03-01T15:47:43.000Z","target":{"type":"git-commit","id":"81c7e17f44e36078306a5f5546ade7d5d57080a3"},"redaction_mode":"hash-response","event_count":1,"events":[{"spec_version":"0.1.0","event_id":"evt_84dd074a","timestamp":"2026-03-01T15:47:39.826Z","prompt":"CI and provenance actions should run on any branch, not on main specifically.","prompt_hash":"sha256:578091ab0867cdcf1eea3e1e3158c8852134e323f9cf077eeffc8458bf923d6f","tool":"claude-code","branch":"feat/gha","response_captured":false,"cwd":"/Users/zmarkan/code/acp"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:65ca37d8651f790597a868a8449613ef58fad217f5afeaefa890678fede49c43"},"branch":"feat/gha","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
