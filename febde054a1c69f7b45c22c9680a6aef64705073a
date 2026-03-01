@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T153133Z_c560
+ACP-Trace-Hash: sha256:1e6ed233dce3e76ac036c9491a41b49aa27cd4031865089af8f282aecae85c74
+ACP-Event-Count: 1
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T153133Z_c560","created_at":"2026-03-01T15:31:33.000Z","target":{"type":"git-commit","id":"febde054a1c69f7b45c22c9680a6aef64705073a"},"redaction_mode":"hash-response","event_count":1,"events":[{"spec_version":"0.1.0","event_id":"evt_dd31aa6c","timestamp":"2026-03-01T15:31:10.583Z","prompt":"Fix all ruff lint errors: unused imports, unused variables, f-strings without placeholders","prompt_hash":"sha256:7946abd88b95e86c98a7762721cfc854c18aac1ba90521e51e7bc1f1979d15e2","tool":"claude-code","branch":"main","files":["cli/src/git_whence/commands/attach.py","cli/src/git_whence/commands/init.py","cli/src/git_whence/commands/reattach.py","cli/src/git_whence/commands/show.py","cli/src/git_whence/commands/verify.py","cli/src/git_whence/git.py","cli/src/git_whence/config.py","cli/src/git_whence/envelope.py","cli/tests/conftest.py","cli/tests/test_integration.py"],"model":"claude-opus-4-6","response_captured":false,"context":{"git_base_sha":"63f412514813fc31f79d4db141c0650604f11799","workspace_state":"dirty"},"cwd":"/Users/zmarkan/code/acp/cli"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:1e6ed233dce3e76ac036c9491a41b49aa27cd4031865089af8f282aecae85c74"},"branch":"main","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
