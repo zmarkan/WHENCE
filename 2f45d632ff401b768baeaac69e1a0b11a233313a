@@ -1,0 +1,8 @@
+ACP-Spec-Version: 0.1.0
+ACP-Trace-Id: 20260301T151809Z_9773
+ACP-Trace-Hash: sha256:656ae464e248686e2449289c7cd46afe36e41ef947d281b8dc8320d2300f4879
+ACP-Event-Count: 2
+ACP-Tool: claude-code
+ACP-Redaction: hash-response
+
+{"spec_version":"0.1.0","trace_id":"20260301T151809Z_9773","created_at":"2026-03-01T15:18:09.000Z","target":{"type":"git-commit","id":"2f45d632ff401b768baeaac69e1a0b11a233313a"},"redaction_mode":"hash-response","event_count":2,"events":[{"spec_version":"0.1.0","event_id":"evt_19f20d2e","timestamp":"2026-03-01T15:17:47.744Z","prompt":"Update CLI.md installation docs from npm/Node.js to pip/Python","prompt_hash":"sha256:e92bcaeb55aa2b24d1612b6bd56d8b5604574fa6590d4f8422c4294823106a50","tool":"claude-code","branch":"main","files":["cli/CLI.md"],"model":"claude-opus-4-6","response_captured":false,"context":{"git_base_sha":"f67587bc49d80662cfd8396de68ffb1a294bf015","workspace_state":"dirty"},"cwd":"/Users/zmarkan/code/acp"},{"spec_version":"0.1.0","event_id":"evt_d46363e4","timestamp":"2026-03-01T15:17:48.864Z","prompt":"Update the CI script to install git-whence from source with working_directory: cli","prompt_hash":"sha256:668bd80fe0e6b231ebefcf8e0ab3040e09130cc7d95c23a387ee78ad26144dae","tool":"claude-code","branch":"main","files":[".circleci/config.yml"],"model":"claude-opus-4-6","response_captured":false,"context":{"git_base_sha":"f67587bc49d80662cfd8396de68ffb1a294bf015","workspace_state":"dirty"},"cwd":"/Users/zmarkan/code/acp"}],"integrity":{"algorithm":"sha256-canonical-json","trace_hash":"sha256:656ae464e248686e2449289c7cd46afe36e41ef947d281b8dc8320d2300f4879"},"branch":"main","tool_summary":{"primary_tool":"claude-code","tools_used":["claude-code"]}}
