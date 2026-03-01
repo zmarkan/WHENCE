@@ -5,7 +5,7 @@ import json
 import sys
 
 from .. import git, envelope, hashing
-from ..exitcodes import SUCCESS, USER_ERROR, ENV_ERROR, POLICY_FAIL
+from ..exitcodes import SUCCESS, USER_ERROR, POLICY_FAIL
 
 
 def register(subparsers):
@@ -104,7 +104,7 @@ def run(args) -> int:
 def _verify_integrity(commit_data: list[dict], args) -> int:
     """Verify all traces are structurally valid and integrity-checked."""
     if not args.quiet:
-        print(f"Verifying policy: integrity")
+        print("Verifying policy: integrity")
         print(f"Range: {len(commit_data)} commits")
         print()
 
@@ -271,7 +271,7 @@ def _validate_headers(trace_obj: dict, note_content: str) -> list[str]:
 def _verify_co_author(commit_data: list[dict], args) -> int:
     """Check that commits with AI co-author signals have ACP traces."""
     if not args.quiet:
-        print(f"Verifying policy: co-author")
+        print("Verifying policy: co-author")
         print(f"Range: {len(commit_data)} commits")
         print()
 
@@ -280,7 +280,6 @@ def _verify_co_author(commit_data: list[dict], args) -> int:
         commit = entry["commit"]
         traces = entry["traces"]
         sha = commit["short_sha"]
-        trailers = commit.get("trailers", "")
         # Also check full commit message
         full_msg = git.commit_message(commit["sha"])
         co_author = _find_ai_co_author(full_msg)
@@ -326,7 +325,7 @@ def _verify_coverage(commit_data: list[dict], args) -> int:
     coverage = traced / total if total > 0 else 0
 
     if not args.quiet:
-        print(f"Verifying policy: coverage")
+        print("Verifying policy: coverage")
         print(f"Range: {total} commits")
         print(f"Coverage: {traced}/{total} ({coverage:.0%})")
         print(f"Threshold: {args.threshold:.0%}")
@@ -346,7 +345,7 @@ def _verify_path_based(commit_data: list[dict], args) -> int:
         return USER_ERROR
 
     if not args.quiet:
-        print(f"Verifying policy: path-based")
+        print("Verifying policy: path-based")
         print(f"Paths: {', '.join(args.paths)}")
         print()
 
@@ -388,7 +387,7 @@ def _verify_path_based(commit_data: list[dict], args) -> int:
 def _verify_attestation(commit_data: list[dict], args) -> int:
     """Require either an ACP trace or a No-AI-Used trailer."""
     if not args.quiet:
-        print(f"Verifying policy: attestation")
+        print("Verifying policy: attestation")
         print(f"Range: {len(commit_data)} commits")
         print()
 

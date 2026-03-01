@@ -1,7 +1,7 @@
 """ACP configuration management (.git/acp/config.json)."""
 
 import json
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from . import git

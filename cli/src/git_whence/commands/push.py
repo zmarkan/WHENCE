@@ -3,7 +3,6 @@
 import sys
 
 from .. import git
-from ..exitcodes import SUCCESS
 
 
 def register(subparsers):

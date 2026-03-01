@@ -1,10 +1,9 @@
 """git whence attach — Bundle queued events into a trace and attach to a commit."""
 
 import sys
-from pathlib import Path
 
 from .. import git, queue, hashing, redaction, envelope, trace, config
-from ..exitcodes import SUCCESS, USER_ERROR, ENV_ERROR, POLICY_FAIL, NOT_FOUND
+from ..exitcodes import SUCCESS, USER_ERROR, POLICY_FAIL, NOT_FOUND
 
 
 def register(subparsers):

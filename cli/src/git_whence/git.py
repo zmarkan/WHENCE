@@ -4,7 +4,6 @@ All interaction with Git goes through this module. Each function maps to
 one git command and raises typed exceptions on failure.
 """
 
-import os
 import subprocess
 from pathlib import Path
 
@@ -215,7 +214,6 @@ def reflog(ref: str = "HEAD") -> list[dict]:
 
     Returns: [{"old_sha": str, "new_sha": str, "action": str, "message": str}]
     """
-    fmt = "%Oold%x00%Hnew%x00%gs"
     # Use the raw reflog format
     result = _run(["reflog", "show", ref, "--format=%H%x00%gD%x00%gs"], check=False)
     if result.returncode != 0:

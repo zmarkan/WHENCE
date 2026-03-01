@@ -164,7 +164,7 @@ def _output_text(data: dict) -> None:
     traced = len(data["traced_commits"])
     pct = data["coverage"] * 100
 
-    print(f"ACP Provenance Report")
+    print("ACP Provenance Report")
     print(f"  AI-assisted commits: {traced} of {total} ({pct:.0f}%)")
 
     tools_str = ", ".join(

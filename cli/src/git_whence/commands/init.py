@@ -4,7 +4,7 @@ import sys
 
 from .. import git
 from ..config import ACPConfig, save
-from ..exitcodes import ENV_ERROR, SUCCESS
+from ..exitcodes import SUCCESS
 
 
 def register(subparsers):
@@ -25,7 +25,7 @@ def register(subparsers):
 
 def run(args) -> int:
     try:
-        root = git.git_root()
+        git.git_root()
     except git.NotAGitRepo:
         print("Error: not a Git repository", file=sys.stderr)
         return 1

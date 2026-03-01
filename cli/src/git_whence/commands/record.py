@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .. import git, queue, hashing, ids, config
-from ..exitcodes import SUCCESS, USER_ERROR, ENV_ERROR
+from ..exitcodes import SUCCESS, USER_ERROR
 
 
 def register(subparsers):

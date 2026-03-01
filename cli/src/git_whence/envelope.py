@@ -99,7 +99,7 @@ def _parse_single_record(record: str) -> dict:
         if line.startswith("{"):
             return json.loads(line)
 
-    raise ValueError(f"Could not parse envelope record: no JSON body found")
+    raise ValueError("Could not parse envelope record: no JSON body found")
 
 
 def parse_headers(record: str) -> dict[str, str]:

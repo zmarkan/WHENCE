@@ -191,13 +191,12 @@ def _verify_trace(trace_obj: dict) -> bool:
     expected = trace_obj.get("integrity", {}).get("trace_hash", "")
     actual = hashing.trace_hash(trace_obj)
     if expected != actual:
-        print(f"  INTEGRITY FAIL: trace_hash mismatch", file=sys.stderr)
+        print("  INTEGRITY FAIL: trace_hash mismatch", file=sys.stderr)
         print(f"    expected: {expected}", file=sys.stderr)
         print(f"    actual:   {actual}", file=sys.stderr)
         return False
 
     # Verify event prompt hashes
-    redaction_mode = trace_obj.get("redaction_mode", "hash-response")
     for i, event in enumerate(trace_obj.get("events", []), 1):
         prompt = event.get("prompt")
         prompt_hash = event.get("prompt_hash")

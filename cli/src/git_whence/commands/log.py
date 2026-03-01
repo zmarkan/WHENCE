@@ -4,7 +4,7 @@ import json
 import sys
 
 from .. import git, envelope
-from ..exitcodes import SUCCESS, USER_ERROR, ENV_ERROR
+from ..exitcodes import SUCCESS, USER_ERROR
 
 
 def register(subparsers):

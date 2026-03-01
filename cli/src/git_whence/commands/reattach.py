@@ -1,10 +1,9 @@
 """git whence reattach — Migrate orphaned ACP traces after history rewriting."""
 
 import json
-import sys
 
 from .. import git, envelope
-from ..exitcodes import SUCCESS, USER_ERROR, ENV_ERROR
+from ..exitcodes import SUCCESS
 
 
 def register(subparsers):
@@ -151,7 +150,6 @@ def _find_successors(old_sha: str, mappings: dict, reflog_entries: list[dict]) -
     successors = []
     seen = set()
 
-    short_old = old_sha[:7]
     for entry in reflog_entries:
         msg = entry.get("message", "")
         new_sha = entry.get("new_sha", "")

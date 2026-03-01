@@ -1,11 +1,8 @@
 """End-to-end integration tests: init -> record -> attach -> show -> verify."""
 
 import json
-import os
 import subprocess
-from pathlib import Path
 
-import pytest
 
 from git_whence.main import main
 
