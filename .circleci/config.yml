@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  test:
+  test-cli:
     docker:
       - image: cimg/python:3.12
     steps:
@@ -9,12 +9,20 @@ jobs:
       - run:
           name: Install dependencies
           command: pip install -e ".[dev]"
+          working_directory: cli
       - run:
           name: Run tests
-          command: pytest
+          command: pytest --junitxml=test-results/results.xml
+          working_directory: cli
       - run:
           name: Lint
           command: ruff check .
+          working_directory: cli
+      - store_test_results:
+          path: cli/test-results
+      - store_artifacts:
+          path: cli/test-results
+          destination: test-results
 
   acp-provenance:
     docker:
@@ -54,7 +62,5 @@ jobs:
 workflows:
   build-and-verify:
     jobs:
-      - test
-      - acp-provenance:
-          requires:
-            - test
+      - test-cli
+      - acp-provenance
