@@ -34,7 +34,7 @@ def register(subparsers):
         action="store_true",
         help="Show compact summary without prompts",
     )
-    p.add_argument("--all", action="store_true", dest="show_all", help="Include commits without traces")
+    p.add_argument("--traced-only", action="store_true", help="Only show commits that have ACP traces")
     p.add_argument("--stats", action="store_true", help="Show summary statistics")
     p.set_defaults(func=run)
 
@@ -104,7 +104,7 @@ def _output_text(entries: list[dict], args) -> int:
                             print(f"    {i}. [hash-only]")
 
                 print()
-        elif args.show_all:
+        elif not args.traced_only:
             print(f"{sha} {msg}")
             print("  (no ACP trace)")
             print()
