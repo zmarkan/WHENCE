@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zmarkan/acp/schema/acp-trace-v0.1.0.json",
+  "title": "ACP Trace",
+  "description": "AI Code Provenance trace record (v0.1.0). Bundles one or more AI development events linked to a version control artifact.",
+  "type": "object",
+  "required": [
+    "spec_version",
+    "trace_id",
+    "created_at",
+    "target",
+    "redaction_mode",
+    "event_count",
+    "events",
+    "integrity"
+  ],
+  "properties": {
+    "spec_version": {
+      "type": "string",
+      "const": "0.1.0",
+      "description": "ACP spec version"
+    },
+    "trace_id": {
+      "type": "string",
+      "description": "Unique identifier (timestamp + random suffix)",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of trace creation"
+    },
+    "target": {
+      "$ref": "#/$defs/target"
+    },
+    "branch": {
+      "type": "string",
+      "description": "Git branch at time of trace creation"
+    },
+    "tool_summary": {
+      "$ref": "#/$defs/tool_summary"
+    },
+    "redaction_mode": {
+      "type": "string",
+      "enum": ["full", "hash-response", "hash-all"],
+      "description": "Redaction mode applied to all events in this trace"
+    },
+    "event_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of events in this trace"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      },
+      "description": "Array of event objects"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "redaction_mode": { "const": "hash-all" }
+        },
+        "required": ["redaction_mode"]
+      },
+      "then": {
+        "properties": {
+          "events": {
+            "items": {
+              "not": {
+                "anyOf": [
+                  { "required": ["prompt"] },
+                  { "required": ["response"] }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "redaction_mode": {
+            "enum": ["full", "hash-response"]
+          }
+        },
+        "required": ["redaction_mode"]
+      },
+      "then": {
+        "properties": {
+          "events": {
+            "items": {
+              "required": ["prompt"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "redaction_mode": { "const": "hash-response" }
+        },
+        "required": ["redaction_mode"]
+      },
+      "then": {
+        "properties": {
+          "events": {
+            "items": {
+              "not": {
+                "required": ["response"]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "target": {
+      "type": "object",
+      "description": "The version control artifact this trace is linked to",
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Artifact type (e.g., git-commit)"
+        },
+        "id": {
+          "type": "string",
+          "description": "Artifact identifier (e.g., full commit object name)",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "tool_summary": {
+      "type": "object",
+      "description": "Summary of tools used across all events",
+      "required": ["primary_tool", "tools_used"],
+      "properties": {
+        "primary_tool": {
+          "type": "string",
+          "description": "Primary tool identifier",
+          "minLength": 1
+        },
+        "tools_used": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "All tool identifiers used in this trace"
+        },
+        "sessions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Session identifiers across events"
+        }
+      },
+      "additionalProperties": false
+    },
+    "integrity": {
+      "type": "object",
+      "description": "Integrity verification data",
+      "required": ["trace_hash", "algorithm"],
+      "properties": {
+        "trace_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of canonical JSON encoding of the trace (excluding integrity object)"
+        },
+        "algorithm": {
+          "type": "string",
+          "description": "Hash algorithm and method identifier",
+          "const": "sha256-canonical-json"
+        }
+      },
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "description": "A single AI prompt interaction event",
+      "required": [
+        "spec_version",
+        "event_id",
+        "timestamp",
+        "prompt_hash"
+      ],
+      "properties": {
+        "spec_version": {
+          "type": "string",
+          "const": "0.1.0",
+          "description": "ACP spec version"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^evt_",
+          "description": "Unique identifier (prefixed evt_)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 UTC timestamp"
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool identifier"
+        },
+        "session_id": {
+          "type": "string",
+          "description": "Session/conversation identifier"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The prompt text (post-redaction)"
+        },
+        "prompt_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of normalized, post-redaction prompt text"
+        },
+        "response": {
+          "type": "string",
+          "description": "The AI response text (post-redaction). Only present in full redaction mode when response_captured is true."
+        },
+        "response_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of normalized, post-redaction response text"
+        },
+        "response_captured": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the AI response was capturable"
+        },
+        "redacted": {
+          "type": "boolean",
+          "description": "True if any content was modified by the redaction pipeline"
+        },
+        "branch": {
+          "type": "string",
+          "description": "Git branch at time of event"
+        },
+        "files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Files the prompt relates to"
+        },
+        "cwd": {
+          "type": "string",
+          "description": "Working directory"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "User-defined tags"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model identifier if known"
+        },
+        "tokens_in": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Input token count if available"
+        },
+        "tokens_out": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Output token count if available"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "response_captured": { "const": false }
+        },
+        "required": ["response_captured"]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            { "required": ["response_hash"] },
+            { "required": ["response"] }
+          ]
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "description": "Code provenance context — what code the AI tool had access to and what changes resulted",
+      "properties": {
+        "git_base_sha": {
+          "type": "string",
+          "description": "Commit the working tree was based on at time of prompting"
+        },
+        "workspace_state": {
+          "type": "string",
+          "enum": ["clean", "dirty"],
+          "description": "Whether the working tree had uncommitted changes"
+        },
+        "input_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/input_artifact"
+          },
+          "description": "Files provided to the tool"
+        },
+        "patch_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of the normalized patch text"
+        },
+        "patch_source": {
+          "type": "string",
+          "enum": ["staged", "working-tree", "tool-export"],
+          "description": "Origin of the patch"
+        },
+        "patch_format": {
+          "type": "string",
+          "description": "Format of the patch text (e.g., git-unified-diff)"
+        },
+        "diff_summary": {
+          "type": "string",
+          "description": "Short human-readable description of what changed"
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_artifact": {
+      "type": "object",
+      "description": "A file provided to the AI tool as context",
+      "required": ["path", "hash"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "File path"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 of the raw file bytes"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
